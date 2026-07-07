@@ -1,0 +1,26 @@
+# Use an official Python runtime footprint environment
+FROM python:3.10-slim
+
+# Set environment system variables
+ENV PYTHONUNBUFFERED=1 \
+    HOME=/home/user
+
+# Setup non-privileged application runtime space user for Hugging Face
+RUN useradd -m -u 1000 user
+WORKDIR $HOME/app
+
+# Copy requirement parameters manifest first to leverage caching layers
+COPY --chown=user requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Bundle application configuration assets
+COPY --chown=user . .
+
+# Adjust system user access layers
+USER user
+
+# Hugging Face exposes internal space interactions strictly via Port 7860
+EXPOSE 7860
+
+# Execute server configuration through Gunicorn production daemon 
+CMD ["gunicorn", "-b", "0.0.0.0:7860", "app:app"]
