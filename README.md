@@ -35,3 +35,5 @@ The system evaluates inference inputs across a multi-model stack to benchmark ef
 * **Data Operations Framework:** Pandas, NumPy
 * **Inference & Math Models:** Scikit-Learn, XGBoost
 * **Container Virtualization:** Docker (Debian/Slim footprint layer)
+##DEMO LINK
+  (https://huggingface.co/spaces/Pavani24/Smart_Lender)
